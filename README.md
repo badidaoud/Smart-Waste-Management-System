@@ -38,6 +38,7 @@ This was a 4-person team project through a Catalyst Entrepreneurship program:
 ## System Architecture
 
 ![System block diagram](assets/block-diagram-system.png)
+
 *Signal and power path: a 3.3V rail feeds the LoRa transmitter and the ESP32, while a separate 5V rail runs through a TLV regulator and USB interface. The ESP32 drives the LoRa transmitter, which reports wirelessly to a receiving LoRa USB module connected to a computer.*
 
 ## Design Process
