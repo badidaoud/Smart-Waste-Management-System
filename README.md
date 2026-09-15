@@ -32,7 +32,7 @@ This was a 4-person team project through a Catalyst Entrepreneurship program:
 
 - **Jay S.** wrote the ESP32 firmware.
 - **Kenneth Martinez** was the most experienced member of the team; he reviewed everyone's work across the board and presented the project.
-- **Mithuran** contributed to reviewing work where he could, balancing it against a heavy university course load.
+- **Mithuran** contributed to reviewing work where he could.
 - **Badi Daoud (me)** designed the hardware, PCB placement and routing, and the mechanical enclosure.
 
 ## System Architecture
