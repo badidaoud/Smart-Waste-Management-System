@@ -1,4 +1,4 @@
-# Smart Waste Management System
+Real-time garbage bin capacity monitoring over LoRa, with a custom ESP32 PCB and SolidWorks enclosure design. Built as a team project through Catalyst Entrepreneurship.# Smart Waste Management System
 
 A LoRa-based system that monitors garbage bin capacity in real time, aiming to improve collection efficiency and prevent overflow. Built through a Catalyst Entrepreneurship project (an optional, non-compulsory program, not coursework).
 
