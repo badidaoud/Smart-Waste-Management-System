@@ -1,11 +1,11 @@
-Real-time garbage bin capacity monitoring over LoRa, with a custom ESP32 PCB and SolidWorks enclosure design. Built as a team project through Catalyst Entrepreneurship.# Smart Waste Management System
+# Smart Waste Management System
 
-A LoRa-based system that monitors garbage bin capacity in real time, aiming to improve collection efficiency and prevent overflow. Built through a Catalyst Entrepreneurship project (an optional, non-compulsory program, not coursework).
+A LoRa-powered sensor that tells you how full a garbage bin actually is, so collection trucks stop guessing and start showing up for bins that actually need it. Four of us built this through Catalyst Entrepreneurship, an optional program, not something we had to do for school, just something we wanted to build.
 
 **Team:** Badi Daoud, Jay S., Kenneth Martinez, Mithuran
-**My role:** hardware design (PCB placement and routing in KiCad/Altium) and mechanical enclosure design (SolidWorks)
+**My role:** hardware (PCB placement and routing) and the mechanical enclosure (SolidWorks)
 
-> This repository is my personal record of a four-person team project. It documents the project honestly, including the gaps in what survived (no firmware source, no recovered presentation), and credits every teammate's contribution; it is not a claim of solo authorship.
+> This is my own record of a project four of us built together. I'm documenting it honestly, including what didn't survive (no firmware source, no recovered presentation), and giving credit where it's due. Not a claim that I built it solo.
 
 ## Table of Contents
 
@@ -22,37 +22,36 @@ A LoRa-based system that monitors garbage bin capacity in real time, aiming to i
 
 ## Overview
 
-Municipal and commercial waste collection is often run on a fixed schedule rather than actual need, which means trucks visit bins that are barely full and miss ones that overflow between visits. This project's goal was a low-cost, low-power sensor node that reports how full a bin is over a long-range wireless link, so collection can be routed by actual capacity instead of a fixed route.
+Most waste collection runs on a fixed schedule instead of actual need, so trucks show up to bins that are half empty and skip ones that are already overflowing. We wanted to fix that with something cheap and low-power that just tells you how full a bin is, over a long-range wireless link, so nobody has to guess.
 
-The core approach: a battery-powered ESP32 node with a capacity sensor sits in or on the bin and reports readings over LoRa to a receiving USB module connected to a computer, which logs bin status without needing local WiFi or cellular coverage at the bin site.
+The idea: a battery-powered ESP32 sits on the bin, reads a capacity sensor, and reports back over LoRa to a receiving USB module plugged into a computer. No WiFi or cell signal needed out at the bin, which matters once you're covering a wide area with bins scattered all over the place.
 
 ## Team and Roles
 
-This was a 4-person team project through a Catalyst Entrepreneurship program:
+Four of us built this through Catalyst Entrepreneurship:
 
 - **Jay S.** wrote the ESP32 firmware.
-- **Kenneth Martinez** was the most experienced member of the team; he reviewed everyone's work across the board and presented the project.
-- **Mithuran** contributed to reviewing work where he could.
-- **Badi Daoud (me)** designed the hardware, PCB placement and routing, and the mechanical enclosure.
+- **Kenneth Martinez** was the most experienced of the four of us. He reviewed everyone's work and ended up presenting the project.
+- **Mithuran** pitched in on reviewing work when he could, though he was buried in university coursework for most of it.
+- **Me (Badi)** handled the hardware: PCB placement and routing, plus the mechanical enclosure.
 
 ## System Architecture
 
 ![System block diagram](assets/block-diagram-system.png)
-
-*Signal and power path: a 3.3V rail feeds the LoRa transmitter and the ESP32, while a separate 5V rail runs through a TLV regulator and USB interface. The ESP32 drives the LoRa transmitter, which reports wirelessly to a receiving LoRa USB module connected to a computer.*
+*How power and signal move around the board: a 3.3V rail feeds the LoRa transmitter and the ESP32, a separate 5V rail runs through a TLV regulator into USB, and the ESP32 talks to the LoRa transmitter, which reports wirelessly to a receiving LoRa USB module plugged into a computer.*
 
 ## Design Process
 
-The design started as a hand-drawn concept sketch before any schematic work began:
+Before any of this was a schematic, it was a napkin sketch:
 
 ![First rough concept sketch](assets/block-diagram-first-sketch.png)
-*Early concept sketch: USB-C charging into a battery, routed through a nano power timer and voltage regulator to power the ESP32, which drives the LoRa transmitter on one side and reads sensor input through I/O on the other.*
+*My first pass at it: USB-C charging a battery, running through a nano power timer and voltage regulator to power the ESP32, which drives the LoRa transmitter on one side and reads sensor input through I/O on the other.*
 
-I learned KiCad from scratch in under 20 days to take this from that sketch to an actual routable board, working through component placement, connections, and an antenna keep-out zone for the LoRa module.
+I'd never touched KiCad before this project. Learned it from scratch in under 20 days, just enough to turn that sketch into an actual board: placing components, wiring everything up, and figuring out the antenna keep-out zone the LoRa module needed.
 
 ## Hardware
 
-The board centers on an ESP32-WROOM-32D, a LoRa transceiver (SX1278), a BQ24072-based battery management/charging circuit, an FTDI UART interface for programming, and a set of switches/DIP pins for configuration. The full KiCad project is in [`hardware/kicad/`](hardware/kicad/), including the completed PCB layout, not just screenshots:
+The board runs on an ESP32-WROOM-32D talking to a LoRa transceiver (SX1278), with a BQ24072 handling battery charging, an FTDI chip for programming over USB, and a handful of switches and DIP pins for configuration. The full KiCad project is in [`hardware/kicad/`](hardware/kicad/), routed PCB layout included, not just pictures of it:
 
 | File | Sheet | Contents |
 |---|---|---|
@@ -63,7 +62,7 @@ The board centers on an ESP32-WROOM-32D, a LoRa transceiver (SX1278), a BQ24072-
 | [`LoRa_schematic.kicad_pcb`](hardware/kicad/LoRa_schematic.kicad_pcb) | — | The routed PCB layout |
 | [`LoRa_schematic.kicad_pro`](hardware/kicad/LoRa_schematic.kicad_pro) | — | KiCad project file tying the sheets together |
 
-The screenshots below are from the KiCad PCB editor during layout, showing component placement and ratsnest connections as the design came together.
+Here's what the layout actually looked like while I was working through it in the PCB editor:
 
 <table>
 <tr>
@@ -71,13 +70,13 @@ The screenshots below are from the KiCad PCB editor during layout, showing compo
 <td><img src="assets/pcb-placement-2.png" alt="PCB component placement, reorganized layout" width="480"/></td>
 </tr>
 <tr>
-<td align="center"><em>Early placement pass: ESP32-WROOM-32D, LoRa transceiver, and surrounding passives with unrouted ratsnest connections</em></td>
-<td align="center"><em>Reorganized placement: components regrouped for shorter, cleaner routing paths</em></td>
+<td align="center"><em>First pass: components are down but nothing's routed yet, hence all the crisscrossing ratsnest lines</em></td>
+<td align="center"><em>Second pass: regrouped everything to shorten the routing paths</em></td>
 </tr>
 </table>
 
 ![PCB placement, detail view with antenna keep-out zone](assets/pcb-placement-3.png)
-*Detail view showing the charging circuit (MCP73831), boost converter (TPS61070), battery footprint, and the antenna keep-out zone required around the LoRa module (no copper or components permitted in that region).*
+*Zoomed in on the charging circuit (MCP73831), the boost converter (TPS61070), the battery footprint, and the keep-out zone the LoRa antenna needs, no copper or components allowed in that hatched area.*
 
 ## Final Product
 
@@ -87,22 +86,22 @@ The screenshots below are from the KiCad PCB editor during layout, showing compo
 <td><img src="assets/pcb-3d-top.png" alt="Populated PCB, top view" width="480"/></td>
 </tr>
 <tr>
-<td align="center"><em>Bare board copper layer, unpopulated</em></td>
-<td align="center"><em>Populated board: battery holder, ESP32 module, LoRa module, buttons, and status LED</em></td>
+<td align="center"><em>Bare copper, nothing populated yet</em></td>
+<td align="center"><em>Populated: battery holder, ESP32, LoRa module, buttons, status LED</em></td>
 </tr>
 <tr>
 <td><img src="assets/pcb-3d-angle-1.png" alt="Populated PCB, alternate angle" width="480"/></td>
 <td><img src="assets/pcb-3d-angle-2.png" alt="Populated PCB, isometric angle" width="480"/></td>
 </tr>
 <tr>
-<td align="center"><em>Populated board, alternate viewing angle</em></td>
-<td align="center"><em>Populated board, isometric view</em></td>
+<td align="center"><em>Same board, different angle</em></td>
+<td align="center"><em>And the isometric view, because it looks cool</em></td>
 </tr>
 </table>
 
 ## Mechanical and Enclosure Design
 
-The sensor node needed a physical enclosure that could mount inside or on a waste bin. I designed this in SolidWorks; the source files are in [`mechanical/`](mechanical/):
+The sensor needed somewhere to actually live on the bin, so I modeled an enclosure in SolidWorks. Source files are in [`mechanical/`](mechanical/):
 
 | File | Description |
 |---|---|
@@ -111,15 +110,13 @@ The sensor node needed a physical enclosure that could mount inside or on a wast
 | [`bins_combined_with_lids.SLDASM`](mechanical/bins_combined_with_lids.SLDASM) | Assembly combining multiple bins with their lids |
 | [`outside_box.SLDPRT`](mechanical/outside_box.SLDPRT) | Outer enclosure box |
 
-No rendered preview images survived for these parts; they're included here as source files only. Anyone with SolidWorks (or a compatible viewer) can open them directly.
+No renders survived for these, just the source files. Open them up in SolidWorks (or a compatible viewer) if you want to poke around.
 
 ## My Contributions
 
-My individual work on the team covered:
-
-- Took the team's initial hand-sketched concept and turned it into an actual KiCad schematic and PCB layout, learning KiCad from the ground up in under 20 days.
-- Placed and routed the board: ESP32-WROOM-32D, LoRa transceiver (SX1278), BQ24072 battery management/charging circuit, TPS61070 boost regulator, and the FTDI programming interface, including the antenna keep-out zone required around the LoRa module.
-- Designed the physical enclosure in SolidWorks: the bin lid, individual slot bin, combined multi-bin assembly, and outer box.
+- Took our rough hand-sketched idea and actually built it out in KiCad, schematic and PCB layout, having never opened the program before this project.
+- Placed and routed the whole board: the ESP32-WROOM-32D, the SX1278 LoRa transceiver, the BQ24072 battery management circuit, the TPS61070 boost regulator, the FTDI programming interface, and the antenna keep-out zone the LoRa module needs.
+- Designed the physical enclosure in SolidWorks: the bin lid, the slot bin, the combined multi-bin assembly, and the outer box.
 
 ## Repository Contents
 
@@ -138,7 +135,7 @@ My individual work on the team covered:
 
 ## Known Gaps
 
-In the interest of being upfront about what this repository does and doesn't contain:
+Being straight about what's not here:
 
-- The ESP32 firmware was written and flashed by a teammate directly from his own computer; no firmware source files exist to include here.
-- The project presentation was lost after a teammate deleted it, and no copy has been recovered.
+- Jay wrote and flashed the firmware straight from his own laptop when we met up, so there's no firmware source to include.
+- The presentation got deleted by a teammate at some point, and nobody's found a copy since.
