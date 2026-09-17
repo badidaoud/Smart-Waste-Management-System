@@ -1,6 +1,6 @@
 # Smart Waste Management System
 
-A LoRa-powered sensor that tells you how full a garbage bin actually is, so collection trucks stop guessing and start showing up for bins that actually need it. Four of us built this through Catalyst Entrepreneurship, an optional program, not something we had to do for school, just something we wanted to build.
+A LoRa-powered sensor that tells you how full a garbage bin actually is, so collection trucks stop guessing and start showing up for bins that actually need it. Four of us built this through Brilliant Catalyst Entrepreneurship, an optional program, not something we had to do for school, just something we wanted to build.
 
 **Team:** Badi Daoud, Jay S., Kenneth Martinez, Mithuran
 **My role:** hardware (PCB placement and routing) and the mechanical enclosure (SolidWorks)
@@ -28,7 +28,7 @@ The idea: a battery-powered ESP32 sits on the bin, reads a capacity sensor, and 
 
 ## Team and Roles
 
-Four of us built this through Catalyst Entrepreneurship:
+Four of us built this through Brilliant Catalyst Entrepreneurship:
 
 - **Jay S.** wrote the ESP32 firmware.
 - **Kenneth Martinez** was the most experienced of the four of us. He reviewed everyone's work and ended up presenting the project.
